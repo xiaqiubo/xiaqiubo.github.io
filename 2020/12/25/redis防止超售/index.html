@@ -203,7 +203,8 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><p>redis在应用中越来越广泛, 其中常用的大部分操作都是非原子性的, 例如<code>set</code>/<code>get</code>/<code>hmset</code>…这些会在多个操作时后边的覆写前边的, 例如</p>
+      </p>
+<h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><p>redis在应用中越来越广泛, 其中常用的大部分操作都是非原子性的, 例如<code>set</code>/<code>get</code>/<code>hmset</code>…这些会在多个操作时后边的覆写前边的, 例如</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">请求A--&gt;数据库C</span><br><span class="line">更多... --&gt;数据库C</span><br><span class="line">请求B--&gt;数据库C</span><br></pre></td></tr></table></figure>
 <p>请求前后先后进入, 几乎同时抵达数据库, 当<code>A</code>检查时没有请求, <code>B</code>先后到达,也检查到没有请求, 此时向<code>redis</code>写入当前请求信息, A写入,B也写入了, 且会被后写入的覆盖, 无提示, 此时便达不到限制的目的, 而且如果秒杀场景下请求大的情况下, 一下进入的可能销售远远超过库存的数量. </p>
 <p>此时就需要使用redis的原子性操作, 同时只能一个读写, 写入/读取有失败提示.<br><code>setnx</code>/<code>getset</code></p>
@@ -234,7 +235,6 @@
 <ol start="4">
 <li>查看剩余库存<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&gt; curl http://localhost:3000/count</span><br><span class="line">0</span><br></pre></td></tr></table></figure></li>
 </ol>
-
     </div>
   </div>
   
