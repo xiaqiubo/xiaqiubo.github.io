@@ -17,10 +17,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: actions/checkout@v2
+
       # Runs a single command using the runners shell
       - name: 发送消息
         env:
-          WEB_STATUS: ${{secrets.WEB_STATUS}}
+          WEB_STATUS: ${{ secrets.WEB_STATUS }}
         run: |
           echo "$WEB_STATUS" > ~/run.js
           cat ~/run.js
