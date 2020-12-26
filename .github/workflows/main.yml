@@ -19,7 +19,9 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: 发送消息
+        env:
+          WEB_STATUS: ${{secrets.WEB_STATUS}}
         run: |
-          echo "${{ secrets.WEB_STATUS }}" > ~/run.js
+          echo "$WEB_STATUS" > ~/run.js
           cat ~/run.js
           
