@@ -24,6 +24,6 @@ jobs:
         env:
           WEB_STATUS: ${{ secrets.WEB_STATUS }}
         run: |
-          echo "$WEB_STATUS" > ~/run.js
+          echo "console.log(process.env.WEB_STATUS)" > ~/run.js
           cat ~/run.js
           
